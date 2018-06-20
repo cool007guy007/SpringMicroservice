@@ -1,4 +1,4 @@
-package com.inventory.service;
+package com.inventory;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
