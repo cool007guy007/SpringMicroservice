@@ -1,11 +1,10 @@
 package com.virlabs.catalogservice.services;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
 
 import java.util.List;
 import java.util.Optional;
 
-import org.slf4j.Logger;
+import org.slf4j.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +15,6 @@ import org.springframework.web.client.RestTemplate;
 import com.virlabs.catalogservice.entities.Product;
 import com.virlabs.catalogservice.repositories.ProductRepository;
 
-import lombok.extern.java.Log;
 import lombok.extern.slf4j.Slf4j;
 
 @Service
@@ -28,6 +26,7 @@ public class ProductService {
 	
 	private final ProductRepository productRepository;
 	private final RestTemplate restTemplate;
+	private static final Logger log = LoggerFactory.getLogger(ProductService.class);
 	
 	@Autowired
 	public ProductService(ProductRepository productRepository,RestTemplate restTemplate){
@@ -41,17 +40,17 @@ public class ProductService {
 	
 	public Optional<Product> findByProductCode(String productCode) {
 		 Optional<Product> productoptional = productRepository.findByCode(productCode);
-		 System.out.println("Fetching inventory level for product_code: "+productCode);
+		 log.info("Fetching inventory level for product_code: "+productCode);
 		 
 		 ResponseEntity<ProductInventoryResponse> itemResponse = restTemplate.getForEntity("http://inventory-service/api/inventory/{productCode}", ProductInventoryResponse.class, productCode);
 		 if(itemResponse.getStatusCode()==HttpStatus.OK) {
 			 
 			Integer quantity = itemResponse.getBody().getAvailableQuantity();
-			System.out.println("Available Quantity"+quantity);
+			log.info("Available Quantity:"+quantity);
 			
 			productoptional.get().setInStock(quantity>0);
 		 }else {
-                System.out.println("Unable to get inventory level for product_code: "+productCode +
+                log.error("Unable to get inventory level for product_code: "+productCode +
                 ", StatusCode: "+itemResponse.getStatusCode());
             }
 
