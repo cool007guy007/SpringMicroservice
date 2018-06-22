@@ -8,5 +8,5 @@ import com.inventory.entities.InventoryItem;
 
 public interface InventoryItemRepository extends JpaRepository<InventoryItem, Long> {
 
-	Optional<InventoryItem> findByProductCode(String productcode);
+	Optional<InventoryItem> findByProductCode(String productCode);
 }

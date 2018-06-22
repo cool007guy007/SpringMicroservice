@@ -13,18 +13,13 @@ import com.inventory.entities.InventoryItem;
 import com.inventory.repository.InventoryItemRepository;
 
 
-import org.hibernate.annotations.common.util.impl.LoggerFactory;
-import org.slf4j.*;
-
-import lombok.extern.slf4j.Slf4j;
-
 @RestController
-@Slf4j
+
 public class InventoryController {
 	
 	
 	private final InventoryItemRepository inventoryItemRepository;
-	private static final Logger log = (Logger) LoggerFactory.logger(InventoryController.class);
+	
 
 	@Autowired
 	public InventoryController(InventoryItemRepository inventoryItemRepository) {
@@ -34,7 +29,7 @@ public class InventoryController {
 	
 	@GetMapping("/api/inventory/{productCode}")
 	public ResponseEntity<InventoryItem> getProductByCode(@PathVariable("productCode") String productCode){
-		log.info("Finding inventory for product code"+productCode);
+		System.out.println("Finding inventory for product code"+productCode);
 		
 		Optional<InventoryItem> inventoryItem= inventoryItemRepository.findByProductCode(productCode);
 		
