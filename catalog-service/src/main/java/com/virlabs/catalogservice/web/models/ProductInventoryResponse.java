@@ -1,9 +1,9 @@
-package com.virlabs.catalogservice.services;
+package com.virlabs.catalogservice.web.models;
 
 
 public class ProductInventoryResponse {
     private String productCode;
-    private int availableQuantity;
+    private int availableQuantity=0;
     
 	public String getProductCode() {
 		return productCode;
