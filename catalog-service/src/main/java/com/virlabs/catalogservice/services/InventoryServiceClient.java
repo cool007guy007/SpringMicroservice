@@ -58,10 +58,10 @@ public class InventoryServiceClient {
 				.getForEntity(INVENTORY_API_PATH + "inventory/{code}", ProductInventoryResponse.class, code);
 
 		// Simulate Delay
-		/*
-		 * try { java.util.concurrent.TimeUnit.SECONDS.sleep(5); } catch
-		 * (InterruptedException e) { e.printStackTrace(); }
-		 */
+		
+//		 try { java.util.concurrent.TimeUnit.SECONDS.sleep(1500); } catch
+//		 (InterruptedException e) { e.printStackTrace(); }
+		 
 
 		if (itemResponseEntity.getStatusCode() == HttpStatus.OK) {
 			Integer quantity = itemResponseEntity.getBody().getAvailableQuantity();
@@ -76,11 +76,12 @@ public class InventoryServiceClient {
 
 	@SuppressWarnings("unused")
 	Optional<ProductInventoryResponse> getDefaultProductInventoryByCode(String productCode) {
-		log.info("Returning default ProductInventoryByCode for productCode: " + productCode);
-		log.info("CorrelationID: " + MyThreadLocalsHolder.getCorrelationId());
+		
 		ProductInventoryResponse response = new ProductInventoryResponse();
 		response.setProductCode(productCode);
 		response.setAvailableQuantity(50);
+		log.info("Returning default ProductInventoryByCode for productCode: " + productCode + " is-->"+ response.getAvailableQuantity());
+		log.info("CorrelationID: " + MyThreadLocalsHolder.getCorrelationId());
 		return Optional.ofNullable(response);
 	}
 
