@@ -11,7 +11,7 @@ import org.springframework.web.client.RestTemplate;
 
 @EnableCircuitBreaker
 @SpringBootApplication 
-@EnableFeignClients(basePackages = {"com.virlabs.catalogservice","com.virlabs.catalogservice.services"})
+@EnableFeignClients
 public class CatalogServiceApplication { 
  
      @Bean
